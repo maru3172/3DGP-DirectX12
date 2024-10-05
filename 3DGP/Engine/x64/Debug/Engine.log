@@ -1,2 +1,11 @@
-﻿  CommandQueue.cpp
+﻿  pch.cpp
+  CommandQueue.cpp
+  Device.cpp
+  Engine.cpp
+  EnginePch.cpp
+  Mesh.cpp
+  RootSignature.cpp
+  Shader.cpp
+  SwapChain.cpp
+  코드를 생성하고 있습니다...
   Engine.vcxproj -> C:\Users\asus\source\repos\3DGP\Output\Engine.lib

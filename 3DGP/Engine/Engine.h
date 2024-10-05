@@ -1,4 +1,11 @@
 #pragma once
+#include "Device.h"
+#include "CommandQueue.h"
+#include "SwapChain.h"
+#include "RootSignature.h"
+#include "Mesh.h"
+#include "Shader.h"
+
 class Engine
 {
 private:
@@ -7,11 +14,16 @@ private:
 	D3D12_VIEWPORT _viewport = { };
 	D3D12_RECT _scissorRect = { };
 
-	std::shared_ptr<class Device> _device;
-	std::shared_ptr<class CommandQueue> _cmdQueue;
-	std::shared_ptr<class SwapChain> _swapChain;
-	std::shared_ptr<class DescriptorHeap> _descHeap;
+	std::shared_ptr<Device> _device;
+	std::shared_ptr<CommandQueue> _cmdQueue;
+	std::shared_ptr<SwapChain> _swapChain;
+	std::shared_ptr<RootSignature> _rootSignature;
 public:
+	std::shared_ptr<Device> GetDevice() { return _device; }
+	std::shared_ptr<CommandQueue> GetCmdQueue() { return _cmdQueue; }
+	std::shared_ptr<SwapChain> GetSwapChain() { return _swapChain; }
+	std::shared_ptr<RootSignature> GetRootSignature() { return _rootSignature; }
+
 	void Init(const WindowInfo& window);
 
 	void Render();

@@ -1,7 +1,9 @@
 C:\Users\asus\source\repos\3DGP\Engine\CommandQueue.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\CommandQueue.obj
-C:\Users\asus\source\repos\3DGP\Engine\DescriptorHeap.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\DescriptorHeap.obj
 C:\Users\asus\source\repos\3DGP\Engine\Device.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\Device.obj
 C:\Users\asus\source\repos\3DGP\Engine\Engine.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\Engine.obj
 C:\Users\asus\source\repos\3DGP\Engine\EnginePch.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\EnginePch.obj
+C:\Users\asus\source\repos\3DGP\Engine\Mesh.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\Mesh.obj
 C:\Users\asus\source\repos\3DGP\Engine\pch.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\pch.obj
+C:\Users\asus\source\repos\3DGP\Engine\RootSignature.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\RootSignature.obj
+C:\Users\asus\source\repos\3DGP\Engine\Shader.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\Shader.obj
 C:\Users\asus\source\repos\3DGP\Engine\SwapChain.cpp;C:\Users\asus\source\repos\3DGP\Engine\x64\Debug\SwapChain.obj

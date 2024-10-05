@@ -55,4 +55,14 @@ struct WindowInfo
 	bool windowed; // 창모드 or 전체화면
 };
 
+struct Vertex
+{
+	Vec3 pos;
+	Vec4 color;
+};
+
+#define DEVICE GEngine->GetDevice()->GetDevice()
+#define CMD_LIST GEngine->GetCmdQueue()->GetCmdList()
+#define ROOT_SIGNATURE GEngine->GetRootSignature()->GetSignature()
+
 extern std::unique_ptr<class Engine> GEngine; // 외부의 클래스 Engine을 전역으로 가져오기 위해 선언

@@ -26,16 +26,22 @@
 class SwapChain
 {
 	ComPtr<IDXGISwapChain> _swapChain;
-	ComPtr<ID3D12Resource> _renderTargets[SWAP_CHAIN_BUFFER_COUNT]; // 현재 그릴 대상
+	
+	ComPtr<ID3D12Resource> _rtvBuffer[SWAP_CHAIN_BUFFER_COUNT]; // 현재 그릴 대상
+	ComPtr<ID3D12DescriptorHeap> _rtvHeap;
+	D3D12_CPU_DESCRIPTOR_HANDLE _rtvHandle[SWAP_CHAIN_BUFFER_COUNT];
+	
 	uint32 _backBufferIndex = 0; // 뒤에서 작업중인 버퍼 인덱스
+	void CreateRTV(ComPtr<ID3D12Device> device);
+	void CreateSwapChain(const WindowInfo& info, ComPtr<IDXGIFactory> dxgi, ComPtr<ID3D12CommandQueue> cmdQueue);
 public:
-	void Init(const WindowInfo& info, ComPtr<IDXGIFactory> dxgi, ComPtr<ID3D12CommandQueue> cmdQueue);
+	void Init(const WindowInfo& info, ComPtr<ID3D12Device> device, ComPtr<IDXGIFactory> dxgi, ComPtr<ID3D12CommandQueue> cmdQueue);
 	void Present();
 	void SwapIndex();
 
 	ComPtr<IDXGISwapChain> GetSwapChain() { return _swapChain; }
-	ComPtr<ID3D12Resource> GetRenderTarget(int32 index) { return _renderTargets[index]; } // 리소스 받기
+	ComPtr<ID3D12Resource> GetRenderTarget(int32 index) { return _rtvBuffer[index]; } // 리소스 받기
 
-	uint32 GetCurretBackBufferIndex() { return _backBufferIndex; }
-	ComPtr<ID3D12Resource> GetCurrentBackBufferResource() { return _renderTargets[_backBufferIndex]; } // 작업할 리소스 받기
+	ComPtr<ID3D12Resource> GetBackRTVBuffer() { return _rtvBuffer[_backBufferIndex]; } // 작업할 리소스 받기
+	D3D12_CPU_DESCRIPTOR_HANDLE GetBackRTV() { return _rtvHandle[_backBufferIndex]; }
 };

@@ -26,16 +26,17 @@ class CommandQueue
 	HANDLE _fenceEvent = INVALID_HANDLE_VALUE;
 
 	std::shared_ptr<SwapChain> _swapChain;
-	std::shared_ptr<DescriptorHeap> _descHeap;
 public:
+
 	~CommandQueue(); // 소멸자
 
-	void Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> swapChain, std::shared_ptr<DescriptorHeap> descHeap);
+	void Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> swapChain);
 	void WaitSync(); // Fence 이용, 다 끝날 때까지 기다려라.
 
 	void RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect);
 	void RenderEnd();
 
 	ComPtr<ID3D12CommandQueue> GetCmdQueue() { return _cmdQueue; }
+	ComPtr<ID3D12GraphicsCommandList> GetCmdList() { return _cmdList; }
 };
 
