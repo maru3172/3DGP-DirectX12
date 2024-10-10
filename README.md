@@ -1,7 +1,12 @@
 # 3DGP-DirectX12
 
 3D Game Programming - DirectX12 Project and Practice
+
 This is DirectX12 3D Game Programming Guide.
+
+You can check each progress to find the location you want and study.
+
+However, this sample may not be accurate because it was made by students after watching the lecture. If so, I hope you enjoy studying DirectX12.
 
 1. 초기화 - 초기화, 삼각형 띄우기, ConstantBuffer, Root Signature, Index Buffer, Texture Mapping, Depth Stencil View
 
