@@ -16,11 +16,13 @@ void Engine::Init(const WindowInfo& window)
 	_cmdQueue = std::make_shared<CommandQueue>();
 	_swapChain = std::make_shared<SwapChain>();
 	_rootSignature = std::make_shared<RootSignature>();
+	_cb = std::make_shared<ConstantBuffer>();
 
 	_device->Init();
 	_cmdQueue->Init(_device->GetDevice(), _swapChain);
 	_swapChain->Init(window, _device->GetDevice(), _device->GetDXGI(), _cmdQueue->GetCmdQueue());
 	_rootSignature->Init(_device->GetDevice());
+	_cb->Init(sizeof(Transform), 256);
 }
 
 void Engine::Render()

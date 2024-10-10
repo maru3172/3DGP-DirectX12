@@ -36,5 +36,13 @@ void Mesh::Render()
 	// 이제 그릴 시간
 	CMD_LIST->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 정점의 형태와 어떻게 연결되어 있지?
 	CMD_LIST->IASetVertexBuffers(0, 1, &_vertexBufferView); // Slot: (0~15)
+
+	// TODO
+	// 1) Buffer에다가 데이터 세팅
+	// 2) Buffer의 주소를 register에다가 전송
+	// CMD_LIST->SetGraphicsRootConstantBufferView(0, ??);
+	GEngine->GetCB()->PushData(0, &_transform, sizeof(_transform));
+	GEngine->GetCB()->PushData(1, &_transform, sizeof(_transform));
+
 	CMD_LIST->DrawInstanced(_vertexCount, 1, 0, 0);
 }
