@@ -17,12 +17,14 @@ void Engine::Init(const WindowInfo& window)
 	_swapChain = std::make_shared<SwapChain>();
 	_rootSignature = std::make_shared<RootSignature>();
 	_cb = std::make_shared<ConstantBuffer>();
+	_tableDescHeap = std::make_shared<TableDescriptorHeap>();
 
 	_device->Init();
 	_cmdQueue->Init(_device->GetDevice(), _swapChain);
 	_swapChain->Init(window, _device->GetDevice(), _device->GetDXGI(), _cmdQueue->GetCmdQueue());
 	_rootSignature->Init(_device->GetDevice());
 	_cb->Init(sizeof(Transform), 256);
+	_tableDescHeap->Init(512);
 }
 
 void Engine::Render()

@@ -78,6 +78,11 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect)
 	// 루트 시그니처 서명 활용
 	_cmdList->SetGraphicsRootSignature(ROOT_SIGNATURE.Get());
 	GEngine->GetCB()->Clear();
+	GEngine->GetTableDescHeap()->Clear();
+
+	// 가져와서 서명함 DescriptorHeap
+	ID3D12DescriptorHeap* descHeap = GEngine->GetTableDescHeap()->GetDescriptorHeap().Get();
+	_cmdList->SetDescriptorHeaps(1, &descHeap);
 
 	_cmdList->ResourceBarrier(1, &barrier);
 	
