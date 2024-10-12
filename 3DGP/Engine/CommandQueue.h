@@ -8,7 +8,6 @@ class DescriptorHeap;
 
 class CommandQueue
 {
-
 	// CommandQueue : DX12에 등장
 	// 외주를 요청할 때, 하나씩 요청하면 비효율적
 	// [외주 목록]에 일감을 차곡차곡 기록했다가 한 방에 요청하는 것
