@@ -6,7 +6,7 @@ This is DirectX12 3D Game Programming Guide.
 
 You can check each progress to find the location you want and study.
 
-Important! If this program warns you that the Engine.lib file cannot be read, please use the Engine solution part after build.
+Important! If this program warns you that the Engine.lib file cannot be read, please build the engine solution part and then use it.
 
 However, this sample may not be accurate because it was made by students after watching the lecture. If so, I hope you enjoy studying DirectX12.
 
