@@ -1,5 +1,7 @@
 #pragma once
 
+class Texture;
+
 // 메쉬 - 정점으로 이루어진 물체, 정점의 모임
 class Mesh
 {
@@ -12,6 +14,7 @@ class Mesh
 	uint32 _indexCount = 0;
 
 	Transform _transform = {};
+	std::shared_ptr<Texture> _tex = {};
 
 	void CreateVertexBuffer(const std::vector<Vertex>& buffer);
 	void CreateIndexBuffer(const std::vector<uint32>& buffer);
@@ -20,4 +23,5 @@ public:
 	void Render();
 
 	void SetTransform(const Transform& t) { _transform = t; }
+	void SetTexture(std::shared_ptr<Texture> tex) { _tex = tex; }
 };

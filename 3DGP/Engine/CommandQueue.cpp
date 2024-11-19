@@ -37,6 +37,9 @@ void CommandQueue::Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> 
 	// 불러오는걸 요청 하기 전 닫고 마감해서 제출하는 느낌
 	_cmdList->Close();
 
+	device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&_resCmdAlloc));
+	device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, _resCmdAlloc.Get(), nullptr, IID_PPV_ARGS(&_resCmdList));
+
 	// CreateFence
 	// - CPU와 GPU의 동기화 수단으로 쓰인다
 	// 울타리를 만들어줌
@@ -118,4 +121,20 @@ void CommandQueue::RenderEnd()
 
 	// 기존 백버퍼 인덱스를 바꿔치기 해줌으로써 스왑할 준비를 마치자
 	_swapChain->SwapIndex();
+}
+
+void CommandQueue::FlushResourceCommandQueue()
+{
+	_resCmdList->Close();
+
+	// 펜스 먼저 적용
+	ID3D12CommandList* cmdListArr[] = { _resCmdList.Get() };
+	_cmdQueue->ExecuteCommandLists(_countof(cmdListArr), cmdListArr);
+
+	// 싱크 후
+	WaitSync();
+
+	// 리셋, 다시 사용할 준비를 끝내자
+	_resCmdAlloc->Reset();
+	_resCmdList->Reset(_resCmdAlloc.Get(), nullptr);
 }

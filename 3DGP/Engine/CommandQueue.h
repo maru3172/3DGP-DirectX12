@@ -16,6 +16,9 @@ class CommandQueue
 	ComPtr<ID3D12CommandAllocator> _cmdAlloc; // 그런 넣는 공간을 할당해주는 기능
 	ComPtr<ID3D12GraphicsCommandList> _cmdList; // 일감을 리스트화 함
 
+	ComPtr<ID3D12CommandAllocator> _resCmdAlloc;
+	ComPtr<ID3D12GraphicsCommandList> _resCmdList;
+
 	// Fence : 울타리(?) - CPU가 GPU 작업할 때 갑자기 들어와서 작업하면 안됨
 	// 그러므로 CPU는 GPU가 작업이 끝날 때까지 동작하지 않게 장막같은걸 치게 만드는데
 	// 그게 바로 동기화임 -> 그러한 기능을 해주는 친구
@@ -35,7 +38,10 @@ public:
 	void RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect);
 	void RenderEnd();
 
+	void FlushResourceCommandQueue();
+
 	ComPtr<ID3D12CommandQueue> GetCmdQueue() { return _cmdQueue; }
 	ComPtr<ID3D12GraphicsCommandList> GetCmdList() { return _cmdList; }
+	ComPtr<ID3D12GraphicsCommandList> GetResourceCmdList() { return _resCmdList; }
 };
 
