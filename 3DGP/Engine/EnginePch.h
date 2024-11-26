@@ -111,4 +111,7 @@ struct Transform
 #define RESOURCE_CMD_LIST	GEngine->GetCmdQueue()->GetResourceCmdList()
 #define ROOT_SIGNATURE GEngine->GetRootSignature()->GetSignature()
 
+#define INPUT GEngine->GetInput()
+#define DELTA_TIME GEngine->GetTimer()->GetDeltaTime()
+
 extern std::unique_ptr<class Engine> GEngine; // 외부의 클래스 Engine을 전역으로 가져오기 위해 선언
