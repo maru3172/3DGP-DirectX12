@@ -53,6 +53,7 @@ public:
 	void Render();
 
 	void Update();
+	void LateUpdate();
 
 	void RenderBegin();
 	void RenderEnd();

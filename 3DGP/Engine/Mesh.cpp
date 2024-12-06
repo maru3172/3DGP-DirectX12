@@ -17,14 +17,6 @@ void Mesh::Render()
 	CMD_LIST->IASetVertexBuffers(0, 1, &_vertexBufferView); // Slot: (0~15)
 	CMD_LIST->IASetIndexBuffer(&_indexBufferView); // 인덱스 버퍼 보면서 삼각형 그리기
 
-	// TODO
-	// 1) Buffer에다가 데이터 세팅
-	// 2) TableDescHeap에다가 CBV 전달
-	// 3) 모든 세팅이 끝나면 TableDescHeap에 커밋
-	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushData(&_transform, sizeof(_transform));
-
-	_mat->Update();
-
 	GEngine->GetTableDescHeap()->CommitTable();
 
 	// CMD_LIST->DrawInstanced(_vertexCount, 1, 0, 0);

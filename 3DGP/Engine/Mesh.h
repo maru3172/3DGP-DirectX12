@@ -14,15 +14,9 @@ class Mesh
 	D3D12_INDEX_BUFFER_VIEW		_indexBufferView;
 	uint32 _indexCount = 0;
 
-	Transform _transform = {};
-	std::shared_ptr<Material> _mat = {};
-
 	void CreateVertexBuffer(const std::vector<Vertex>& buffer);
 	void CreateIndexBuffer(const std::vector<uint32>& buffer);
 public:
 	void Init(const std::vector<Vertex>& vertexBuffer, const std::vector<uint32>& indexBuffer);
 	void Render();
-
-	void SetTransform(const Transform& t) { _transform = t; }
-	void SetMaterial(std::shared_ptr<Material> mat) { _mat = mat;  }
 };
