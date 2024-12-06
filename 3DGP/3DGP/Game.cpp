@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "Game.h"
 #include "Engine.h"
+#include "Material.h"
 
 std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-std::shared_ptr<Shader> shader = std::make_shared<Shader>();
-std::shared_ptr<Texture> texture = std::make_shared<Texture>();
 
 void Game::init(const WindowInfo& info)
 {
@@ -38,9 +37,18 @@ void Game::init(const WindowInfo& info)
 
 	mesh->Init(vec, indexVec);
 
+	std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+	std::shared_ptr<Texture> texture = std::make_shared<Texture>();
 	shader->Init(L"..\\Resources\\Shader\\default.hlsli");
+	texture->Init(L"..\\Resources\\Texture\\background.jpg");
 
-	texture->Init(L"..\\Resources\\Texture\\BackGround.jpg");
+	std::shared_ptr<Material> material = std::make_shared<Material>();
+	material->SetShader(shader);
+	material->SetFloat(0, 0.3f);
+	material->SetFloat(1, 0.4f);
+	material->SetFloat(2, 0.3f);
+	material->SetTexture(0, texture);
+	mesh->SetMaterial(material);
 
 	GEngine->GetCmdQueue()->WaitSync();
 }
@@ -50,8 +58,6 @@ void Game::Update()
 	GEngine->Update();
 	GEngine->RenderBegin();
 
-	shader->Update();
-	 
 	{
 		static Transform t = {};
 
@@ -65,8 +71,6 @@ void Game::Update()
 			t.offset.x += 1.f * DELTA_TIME;
 
 		mesh->SetTransform(t);
-
-		mesh->SetTexture(texture);
 
 		mesh->Render();
 	}

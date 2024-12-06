@@ -25,25 +25,28 @@ class Engine
 	std::shared_ptr<CommandQueue> _cmdQueue = std::make_shared<CommandQueue>();
 	std::shared_ptr<SwapChain> _swapChain = std::make_shared<SwapChain>();
 	std::shared_ptr<RootSignature> _rootSignature = std::make_shared<RootSignature>();
-	std::shared_ptr<ConstantBuffer> _cb = std::make_shared<ConstantBuffer>();
 	std::shared_ptr<TableDescriptorHeap> _tableDescHeap = std::make_shared<TableDescriptorHeap>();
 	std::shared_ptr<DepthStencilBuffer> _depthStencilBuffer = std::make_shared<DepthStencilBuffer>();
 
 	std::shared_ptr<Input> _input = std::make_shared<Input>();
 	std::shared_ptr<Timer> _timer = std::make_shared<Timer>();
 
+	std::vector<std::shared_ptr<ConstantBuffer>> _constantBuffers;
+
 	void ShowFps();
+	void CreateConstantBuffer(CBV_REGISTER reg, uint32 bufferSize, uint32 count);
 public:
 	std::shared_ptr<Device> GetDevice() { return _device; }
 	std::shared_ptr<CommandQueue> GetCmdQueue() { return _cmdQueue; }
 	std::shared_ptr<SwapChain> GetSwapChain() { return _swapChain; }
 	std::shared_ptr<RootSignature> GetRootSignature() { return _rootSignature; }
-	std::shared_ptr<ConstantBuffer> GetCB() { return _cb; }
 	std::shared_ptr<TableDescriptorHeap> GetTableDescHeap() { return _tableDescHeap; }
 	std::shared_ptr<DepthStencilBuffer> GetDepthStencilBuffer() { return _depthStencilBuffer; }
 
 	std::shared_ptr<Input> GetInput() { return _input; }
 	std::shared_ptr<Timer> GetTimer() { return _timer; }
+
+	std::shared_ptr<ConstantBuffer> GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return _constantBuffers[static_cast<uint8>(type)]; }
 
 	void Init(const WindowInfo& window);
 

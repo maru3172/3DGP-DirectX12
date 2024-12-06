@@ -114,4 +114,6 @@ struct Transform
 #define INPUT GEngine->GetInput()
 #define DELTA_TIME GEngine->GetTimer()->GetDeltaTime()
 
+#define CONST_BUFFER(type) GEngine->GetConstantBuffer(type)
+
 extern std::unique_ptr<class Engine> GEngine; // 외부의 클래스 Engine을 전역으로 가져오기 위해 선언
