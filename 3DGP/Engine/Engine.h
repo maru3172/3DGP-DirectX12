@@ -40,6 +40,7 @@ public:
 	std::shared_ptr<ConstantBuffer> GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return _constantBuffers[static_cast<uint8>(type)]; }
 
 	void Init(const WindowInfo& window);
+	const WindowInfo& GetWindow() { return _window; }
 
 	void Update();
 

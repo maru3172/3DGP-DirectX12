@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "Camera.h"
 #include "MonoBehaviour.h"
 
 GameObject::GameObject()
@@ -12,11 +13,6 @@ GameObject::GameObject()
 GameObject::~GameObject()
 {
 
-}
-
-void GameObject::Init()
-{
-	AddComponent(std::make_shared<Transform>());
 }
 
 void GameObject::Awake()
@@ -75,11 +71,40 @@ void GameObject::LateUpdate()
 	}
 }
 
+void GameObject::FinalUpdate()
+{
+	for (std::shared_ptr<Component>& component : _components)
+	{
+		if (component)
+			component->FinalUpdate();
+	}
+}
+
+std::shared_ptr<Component> GameObject::GetFixedComponent(COMPONENT_TYPE type)
+{
+	uint8 index = static_cast<uint8>(type);
+	assert(index < FIXED_COMPONENT_COUNT);
+	return _components[index];
+}
+
 std::shared_ptr<Transform> GameObject::GetTransform()
 {
-	uint8 index = static_cast<uint8>(COMPONENT_TYPE::TRANSFORM);
-	return static_pointer_cast<Transform>(_components[index]);
+	std::shared_ptr<Component> component = GetFixedComponent(COMPONENT_TYPE::TRANSFORM);
+	return static_pointer_cast<Transform>(component);
 }
+
+std::shared_ptr<MeshRenderer> GameObject::GetMeshRenderer()
+{
+	std::shared_ptr<Component> component = GetFixedComponent(COMPONENT_TYPE::MESH_RENDERER);
+	return static_pointer_cast<MeshRenderer>(component);
+}
+
+std::shared_ptr<Camera> GameObject::GetCamera()
+{
+	std::shared_ptr<Component> component = GetFixedComponent(COMPONENT_TYPE::CAMERA);
+	return static_pointer_cast<Camera>(component);
+}
+
 
 void GameObject::AddComponent(std::shared_ptr<Component> component)
 {

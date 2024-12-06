@@ -6,6 +6,10 @@
 #include "Material.h"
 #include "GameObject.h"
 #include "MeshRenderer.h"
+#include "Transform.h"
+#include "Camera.h"
+
+#include "TestCameraScript.h"
 
 void SceneManager::Update()
 {
@@ -14,6 +18,22 @@ void SceneManager::Update()
 
 	_activeScene->Update();
 	_activeScene->LateUpdate();
+	_activeScene->FinalUpdate();
+}
+
+void SceneManager::Render()
+{
+	if (_activeScene == nullptr)
+		return;
+
+	const std::vector<std::shared_ptr<GameObject>>& gameObjects = _activeScene->GetGameObjects();
+	for (auto& gameObject : gameObjects)
+	{
+		if (gameObject->GetCamera() == nullptr)
+			continue;
+
+		gameObject->GetCamera()->Render();
+	}
 }
 
 void SceneManager::LoadScene(std::wstring sceneName)
@@ -31,7 +51,7 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 {
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>();
 
-	// TestObject
+#pragma region TestObject
 	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 
 	std::vector<Vertex> vec(4);
@@ -60,7 +80,10 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		indexVec.push_back(3);
 	}
 
-	gameObject->Init(); // Transform
+	gameObject->AddComponent(std::make_shared<Transform>());
+	std::shared_ptr<Transform> transform = gameObject->GetTransform();
+	transform->SetLocalPosition(Vec3(0.f, 100.f, 200.f));
+	transform->SetLocalScale(Vec3(100.f, 100.f, 1.f));
 
 	std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
 
@@ -69,7 +92,6 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		mesh->Init(vec, indexVec);
 		meshRenderer->SetMesh(mesh);
 	}
-
 	{
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
@@ -83,10 +105,18 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		material->SetTexture(0, texture);
 		meshRenderer->SetMaterial(material);
 	}
-
 	gameObject->AddComponent(meshRenderer);
-
 	scene->AddGameObject(gameObject);
+#pragma endregion
+
+#pragma region Camera
+	std::shared_ptr<GameObject> camera = std::make_shared<GameObject>();
+	camera->AddComponent(std::make_shared<Transform>());
+	camera->AddComponent(std::make_shared<Camera>());
+	camera->AddComponent(std::make_shared<TestCameraScript>());
+	camera->GetTransform()->SetLocalPosition(Vec3(0.f, 100.f, 0.f));
+	scene->AddGameObject(camera);
+#pragma endregion
 
 	return scene;
 }

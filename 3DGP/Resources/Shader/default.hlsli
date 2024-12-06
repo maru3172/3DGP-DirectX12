@@ -1,9 +1,9 @@
 // HLSL - High Level Shader Language(C언어 기반 Shader 언어)
 
 //constant buffer 사용
-cbuffer TEST_B0 : register(b0)
+cbuffer TRANSFORM_PARAMS : register(b0)
 {
-    float4 offset0;
+    row_major matrix matWVP;
 };
 
 cbuffer MATERIAL_PARAMS : register(b1)
@@ -46,12 +46,7 @@ VS_OUT VS_Main(VS_IN input)
 {
     VS_OUT output = (VS_OUT) 0;
 
-    output.pos = float4(input.pos, 1.f);
-    //output.pos += offset0;
-    output.pos.x += float_0;
-    output.pos.y += float_1;
-    output.pos.z += float_2;
-    
+    output.pos = mul(float4(input.pos, 1.f), matWVP);
     output.color = input.color;
     output.uv = input.uv;
     

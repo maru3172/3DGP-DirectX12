@@ -11,6 +11,7 @@ class SceneManager
 	std::shared_ptr<Scene> LoadTestScene();
 public:
 	void Update();
+	void Render();
 	void LoadScene(std::wstring sceneName);
 
 	std::shared_ptr<Scene> GetActiveScene() { return _activeScene; }

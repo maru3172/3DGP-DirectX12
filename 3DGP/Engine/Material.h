@@ -33,6 +33,6 @@ public:
 	void SetFloat(uint8 index, float value) { _params.SetFloat(index, value); }
 	void SetTexture(uint8 index, std::shared_ptr<Texture> texture) { _textures[index] = texture; }
 
-	void Update();
+	void PushData();
 };
 
