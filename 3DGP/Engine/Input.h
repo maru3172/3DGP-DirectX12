@@ -30,6 +30,7 @@ enum
 
 class Input
 {
+	DECLARE_SINGLE(Input);
 	HWND _hwnd;
 	std::vector<KEY_STATE> _states;
 

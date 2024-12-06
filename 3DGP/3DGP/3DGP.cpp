@@ -49,7 +49,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     GWindowInfo.windowed = true;
     
     std::unique_ptr<Game> game = std::make_unique<Game>();
-    game->init(GWindowInfo);
+    game->Init(GWindowInfo);
 
     // 기본 메시지 루프입니다:
     while (true)

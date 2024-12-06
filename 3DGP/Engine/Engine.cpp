@@ -2,6 +2,9 @@
 #include "Engine.h"
 #include "Material.h"
 #include "Transform.h"
+#include "Input.h"
+#include "Timer.h"
+#include "SceneManager.h"
 
 void Engine::Init(const WindowInfo& window)
 {
@@ -18,35 +21,32 @@ void Engine::Init(const WindowInfo& window)
 	_tableDescHeap->Init(512);
 	_depthStencilBuffer->Init(_window);
 
-	_input->Init(window.hWnd);
-	_timer->Init();
-
 	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(TransformMatrix), 256);
 	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(MaterialParams), 256);
 
 	ResizeWindow(_window.width, _window.height);
+
+	GET_SINGLE(Input)->Init(window.hWnd);
+	GET_SINGLE(Timer)->Init();
+}
+
+void Engine::Update()
+{
+	GET_SINGLE(Input)->Update();
+	GET_SINGLE(Timer)->Update();
+
+	Render();
+
+	ShowFps();
 }
 
 void Engine::Render()
 {
 	RenderBegin();
 
-	//나머지 물체 그림
+	GET_SINGLE(SceneManager)->Update();
 
 	RenderEnd();
-}
-
-void Engine::Update()
-{
-	_input->Update();
-	_timer->Update();
-
-	ShowFps();
-}
-
-void Engine::LateUpdate()
-{
-	// TODO
 }
 
 void Engine::RenderBegin()
@@ -72,7 +72,7 @@ void Engine::ResizeWindow(int32 width, int32 height) // 윈도우 창 크기 변경
 
 void Engine::ShowFps()
 {
-	uint32 fps = _timer->GetFps();
+	uint32 fps = GET_SINGLE(Timer)->GetFps();
 
 	WCHAR text[100] = L"";
 	::wsprintf(text, L"FPS : %d", fps);

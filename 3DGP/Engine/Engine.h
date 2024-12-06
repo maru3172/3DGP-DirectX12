@@ -10,9 +10,6 @@
 #include "Texture.h"
 #include "DepthStencilBuffer.h"
 
-#include "Input.h"
-#include "Timer.h"
-
 class Engine
 {
 	// 그려질 화면 크기 관련
@@ -28,9 +25,6 @@ class Engine
 	std::shared_ptr<TableDescriptorHeap> _tableDescHeap = std::make_shared<TableDescriptorHeap>();
 	std::shared_ptr<DepthStencilBuffer> _depthStencilBuffer = std::make_shared<DepthStencilBuffer>();
 
-	std::shared_ptr<Input> _input = std::make_shared<Input>();
-	std::shared_ptr<Timer> _timer = std::make_shared<Timer>();
-
 	std::vector<std::shared_ptr<ConstantBuffer>> _constantBuffers;
 
 	void ShowFps();
@@ -43,18 +37,13 @@ public:
 	std::shared_ptr<TableDescriptorHeap> GetTableDescHeap() { return _tableDescHeap; }
 	std::shared_ptr<DepthStencilBuffer> GetDepthStencilBuffer() { return _depthStencilBuffer; }
 
-	std::shared_ptr<Input> GetInput() { return _input; }
-	std::shared_ptr<Timer> GetTimer() { return _timer; }
-
 	std::shared_ptr<ConstantBuffer> GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return _constantBuffers[static_cast<uint8>(type)]; }
 
 	void Init(const WindowInfo& window);
 
-	void Render();
-
 	void Update();
-	void LateUpdate();
 
+	void Render();
 	void RenderBegin();
 	void RenderEnd();
 

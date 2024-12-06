@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Input.h"
 
+
 void Input::Init(HWND hwnd)
 {
 	_hwnd = hwnd;

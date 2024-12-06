@@ -101,14 +101,27 @@ struct Vertex
 	Vec2 uv;
 };
 
-#define DEVICE GEngine->GetDevice()->GetDevice()
-#define CMD_LIST GEngine->GetCmdQueue()->GetCmdList()
+#define DECLARE_SINGLE(type)		\
+private:							\
+	type() {}						\
+	~type() {}						\
+public:								\
+	static type* GetInstance()		\
+	{								\
+		static type instance;		\
+		return &instance;			\
+	}								\
+
+#define GET_SINGLE(type)	type::GetInstance()
+
+#define DEVICE				GEngine->GetDevice()->GetDevice()
+#define CMD_LIST			GEngine->GetCmdQueue()->GetCmdList()
 #define RESOURCE_CMD_LIST	GEngine->GetCmdQueue()->GetResourceCmdList()
-#define ROOT_SIGNATURE GEngine->GetRootSignature()->GetSignature()
+#define ROOT_SIGNATURE		GEngine->GetRootSignature()->GetSignature()
 
-#define INPUT GEngine->GetInput()
-#define DELTA_TIME GEngine->GetTimer()->GetDeltaTime()
+#define INPUT				GET_SINGLE(Input)
+#define DELTA_TIME			GET_SINGLE(Timer)->GetDeltaTime()
 
-#define CONST_BUFFER(type) GEngine->GetConstantBuffer(type)
+#define CONST_BUFFER(type)	GEngine->GetConstantBuffer(type)
 
-extern std::unique_ptr<class Engine> GEngine; // 외부의 클래스 Engine을 전역으로 가져오기 위해 선언
+extern std::unique_ptr<class Engine> GEngine;
