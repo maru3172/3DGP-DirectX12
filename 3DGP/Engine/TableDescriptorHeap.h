@@ -1,4 +1,5 @@
 #pragma once
+
 class TableDescriptorHeap
 {
 	ComPtr<ID3D12DescriptorHeap> _descHeap;
