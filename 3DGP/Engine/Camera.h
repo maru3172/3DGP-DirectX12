@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Frustum.h"
 
 enum class PROJECTION_TYPE
 {
@@ -18,6 +19,8 @@ class Camera : public Component
 
 	Matrix _matView = {};
 	Matrix _matProjection = {};
+
+	Frustum _frustum;
 public:
 	Camera();
 	virtual ~Camera();

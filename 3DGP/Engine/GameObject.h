@@ -12,6 +12,8 @@ class GameObject : public Object, public std::enable_shared_from_this<GameObject
 {
 	std::array<std::shared_ptr<Component>, FIXED_COMPONENT_COUNT> _components;
 	std::vector<std::shared_ptr<MonoBehaviour>> _scripts;
+
+	bool _checkFrustum = true;
 public:
 	GameObject();
 	virtual ~GameObject();
@@ -30,5 +32,8 @@ public:
 	std::shared_ptr<Light> GetLight();
 
 	void AddComponent(std::shared_ptr<Component> component);
+	
+	void SetCheckFrustum(bool checkFrustum) { _checkFrustum = checkFrustum; }
+	bool GetCheckFrustum() { return _checkFrustum; }
 };
 
