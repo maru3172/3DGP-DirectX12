@@ -12,7 +12,7 @@ Texture::~Texture()
 
 }
 
-void Texture::Init(const std::wstring& path)
+void Texture::Load(const std::wstring& path)
 {
 	CreateTexture(path);
 	CreateView();

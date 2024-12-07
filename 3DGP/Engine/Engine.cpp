@@ -6,6 +6,7 @@
 #include "Timer.h"
 #include "SceneManager.h"
 #include "Light.h"
+#include "Resources.h"
 
 void Engine::Init(const WindowInfo& window)
 {
@@ -30,6 +31,7 @@ void Engine::Init(const WindowInfo& window)
 
 	GET_SINGLE(Input)->Init(window.hWnd);
 	GET_SINGLE(Timer)->Init();
+	GET_SINGLE(Resources)->Init();
 }
 
 void Engine::Update()

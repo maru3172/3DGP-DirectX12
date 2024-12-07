@@ -11,7 +11,11 @@ class Resources
 
 	using KeyObjMap = std::map<std::wstring/*key*/, std::shared_ptr<Object>>;
 	std::array<KeyObjMap, OBJECT_TYPE_COUNT> _resources;
+
+	void CreateDefaultShader();
 public:
+	void Init();
+
 	template<typename T>
 	std::shared_ptr<T> Load(const std::wstring& key, const std::wstring& path);
 
@@ -24,6 +28,7 @@ public:
 	template<typename T>
 	OBJECT_TYPE GetObjectType();
 
+	std::shared_ptr<Mesh> LoadRectangleMesh();
 	std::shared_ptr<Mesh> LoadCubeMesh();
 	std::shared_ptr<Mesh> LoadSphereMesh();
 };
