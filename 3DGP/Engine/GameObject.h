@@ -1,11 +1,13 @@
 #pragma once
 #include "Component.h"
+#include "Object.h"
+
 class Transform;
 class MeshRenderer;
 class Camera;
 class MonoBehaviour;
 
-class GameObject : public std::enable_shared_from_this<GameObject>
+class GameObject : public Object, public std::enable_shared_from_this<GameObject>
 {
 	std::array<std::shared_ptr<Component>, FIXED_COMPONENT_COUNT> _components;
 	std::vector<std::shared_ptr<MonoBehaviour>> _scripts;

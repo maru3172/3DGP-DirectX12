@@ -3,6 +3,16 @@
 #include "Engine.h"
 #include "Material.h"
 
+Mesh::Mesh() : Object(OBJECT_TYPE::MESH)
+{
+
+}
+
+Mesh::~Mesh()
+{
+
+}
+
 // 인덱스 삼각형 리스트로 변경
 void Mesh::Init(const std::vector<Vertex>& vertexBuffer, const std::vector<uint32>& indexBuffer)
 {

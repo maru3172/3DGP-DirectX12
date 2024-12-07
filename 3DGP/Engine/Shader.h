@@ -1,7 +1,8 @@
 #pragma once
+#include "Object.h"
 
 // 뭘 해야할지 기술하는 기술서
-class Shader
+class Shader : public Object
 {
 	ComPtr<ID3DBlob>					_vsBlob;
 	ComPtr<ID3DBlob>					_psBlob;
@@ -14,6 +15,9 @@ class Shader
 	void CreateVertexShader(const std::wstring& path, const std::string& name, const std::string& version);
 	void CreatePixelShader(const std::wstring& path, const std::string& name, const std::string& version);
 public:
+	Shader();
+	virtual ~Shader();
+
 	void Init(const std::wstring& path);
 	void Update();
 };
