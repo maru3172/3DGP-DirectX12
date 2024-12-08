@@ -10,22 +10,18 @@ However, this sample may not be accurate because it was made by students after w
 
 Important! If this program warns you that the Engine.lib file cannot be read, please build the engine solution part and then use it.
 
-1. 초기화 - 초기화, 삼각형 띄우기, ConstantBuffer, Root Signature, Index Buffer, Texture Mapping, Depth Stencil View
+1. initialization - initialization, Triangle, ConstantBuffer, Root Signature, Index Buffer, Texture Mapping, Depth Stencil View
 
 2. Component - input & Timer, Material, Component, Scene
 
-3. Vector & Matrix - 삼각함수, 벡터, 행렬, Scale/Rotate/Translate, 좌표계 변환, World / View 변환 행렬, Projection / Screen 변환 행렬
+3. Camera & Lighting - Camera, Resources, Ligting, Normal Mapping, Skybox, Frustum Culling
 
-4. Camera & Lighting - Camera, Resources, Ligting, Normal Mapping, Skybox, Frustum Culling
+4. Rendering - Orthographic Projection, Render Target, Deferred Rendering
 
-5. Quaternion
+5. Paticle - Compute Shader, Particle System, Instancing
 
-6. Rendering - 직교투영, Render Target, Deferred Rendering
+6. Shadow Mapping
 
-7. Paticle - Compute Shader, Particle System, Instancing
+7. Terrain - Tessellation, Terrain, Picking
 
-8. Shadow Mapping
-
-9. Terrain - Tessellation, Terrain, Picking
-
-10. Mesh & Animation - Mash, Animation
+8. Mesh & Animation - Mash, Animation
