@@ -13,6 +13,7 @@ class Resources
 	std::array<KeyObjMap, OBJECT_TYPE_COUNT> _resources;
 
 	void CreateDefaultShader();
+	void CreateDefaultMaterial();
 public:
 	void Init();
 
