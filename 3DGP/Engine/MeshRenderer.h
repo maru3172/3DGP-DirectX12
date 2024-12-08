@@ -11,6 +11,8 @@ public:
 	MeshRenderer();
 	virtual ~MeshRenderer();
 
+	std::shared_ptr<Material> GetMaterial() { return _material; }
+
 	void SetMesh(std::shared_ptr<Mesh> mesh) { _mesh = mesh; }
 	void SetMaterial(std::shared_ptr<Material> material) { _material = material; }
 

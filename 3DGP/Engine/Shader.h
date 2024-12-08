@@ -1,6 +1,12 @@
 #pragma once
 #include "Object.h"
 
+enum class SHADER_TYPE : uint8
+{
+	DEFERRED,
+	FORWARD,
+};
+
 enum class RASTERIZER_TYPE
 {
 	CULL_NONE,
@@ -19,13 +25,17 @@ enum class DEPTH_STENCIL_TYPE
 
 struct ShaderInfo
 {
+	SHADER_TYPE shaderType = SHADER_TYPE::FORWARD;
 	RASTERIZER_TYPE rasterizerType = RASTERIZER_TYPE::CULL_BACK;
 	DEPTH_STENCIL_TYPE depthStencilType = DEPTH_STENCIL_TYPE::LESS;
+	D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 };
 
 // 뭘 해야할지 기술하는 기술서
 class Shader : public Object
 {
+	ShaderInfo _info;
+
 	ComPtr<ID3DBlob>					_vsBlob;
 	ComPtr<ID3DBlob>					_psBlob;
 	ComPtr<ID3DBlob>					_errBlob;
@@ -42,5 +52,7 @@ public:
 
 	void Init(const std::wstring& path, ShaderInfo info = ShaderInfo());
 	void Update();
+
+	SHADER_TYPE GetShaderType() { return _info.shaderType; }
 };
 

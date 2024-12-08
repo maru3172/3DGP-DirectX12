@@ -4,7 +4,6 @@
 void SwapChain::Init(const WindowInfo& info, ComPtr<ID3D12Device> device, ComPtr<IDXGIFactory> dxgi, ComPtr<ID3D12CommandQueue> cmdQueue)
 {
 	CreateSwapChain(info, dxgi, cmdQueue);
-	CreateRTV(device);
 }
 
 void SwapChain::CreateSwapChain(const WindowInfo& info, ComPtr<IDXGIFactory> dxgi, ComPtr<ID3D12CommandQueue> cmdQueue)
@@ -31,9 +30,6 @@ void SwapChain::CreateSwapChain(const WindowInfo& info, ComPtr<IDXGIFactory> dxg
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	dxgi->CreateSwapChain(cmdQueue.Get(), &sd, &_swapChain);
-
-	for (int32 i = 0; i < SWAP_CHAIN_BUFFER_COUNT; i++)
-		_swapChain->GetBuffer(i, IID_PPV_ARGS(&_rtvBuffer[i]));
 }
 
 void SwapChain::Present()
@@ -46,32 +42,4 @@ void SwapChain::SwapIndex()
 {
 	// 인덱스 스왑
 	_backBufferIndex = (_backBufferIndex + 1) % SWAP_CHAIN_BUFFER_COUNT;
-}
-
-void SwapChain::CreateRTV(ComPtr<ID3D12Device> device)
-{
-	// Descriptor (DX12) = View (~DX11)
-	// [서술자 힙]으로 RTV 생성
-	// DX11의 RTV(RenderTargetView), DSV(DepthStencilView), 
-	// CBV(ConstantBufferView), SRV(ShaderResourceView), UAV(UnorderedAccessView)를 전부!
-	// 해당 타입으로 서술자가 어떤 방식으로 어떻게 사용해야할지 기록
-	int32 rtvHeapSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV); // 사이즈 계산
-
-	D3D12_DESCRIPTOR_HEAP_DESC rtvDesc;
-	rtvDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	rtvDesc.NumDescriptors = SWAP_CHAIN_BUFFER_COUNT;
-	rtvDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	rtvDesc.NodeMask = 0;
-
-	// 같은 종류의 데이터끼리 배열로 관리
-	// RTV 목록 : [ ] [ ]
-	device->CreateDescriptorHeap(&rtvDesc, IID_PPV_ARGS(&_rtvHeap)); // 배열 생성
-
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHeapBegin = _rtvHeap->GetCPUDescriptorHandleForHeapStart();
-
-	for (int i = 0; i < SWAP_CHAIN_BUFFER_COUNT; i++)
-	{
-		_rtvHandle[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(rtvHeapBegin, i * rtvHeapSize); // 시작 주소에서 i * 크기만큼 곱해 주소 지정 및 공간
-		device->CreateRenderTargetView(_rtvBuffer[i].Get(), nullptr, _rtvHandle[i]); // 실제로 만들기
-	}
 }

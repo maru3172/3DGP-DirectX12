@@ -6,7 +6,7 @@
 #define _DEFALUT_FX_
 
 #include "params.fx"
-#include "Utils.fx"
+#include "utils.fx"
 
 struct VS_IN
 {

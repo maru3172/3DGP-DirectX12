@@ -31,6 +31,12 @@ public:
 	std::shared_ptr<Mesh> LoadRectangleMesh();
 	std::shared_ptr<Mesh> LoadCubeMesh();
 	std::shared_ptr<Mesh> LoadSphereMesh();
+
+	std::shared_ptr<Texture> CreateTexture(const std::wstring& name, DXGI_FORMAT format, uint32 width, uint32 height,
+		const D3D12_HEAP_PROPERTIES& heapProperty, D3D12_HEAP_FLAGS heapFlags,
+		D3D12_RESOURCE_FLAGS resFlags = D3D12_RESOURCE_FLAG_NONE, Vec4 clearColor = Vec4());
+
+	std::shared_ptr<Texture> CreateTextureFromResource(const std::wstring& name, ComPtr<ID3D12Resource> tex2D);
 };
 
 template<typename T>

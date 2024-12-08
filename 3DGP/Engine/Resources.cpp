@@ -225,12 +225,34 @@ std::shared_ptr<Mesh> Resources::LoadSphereMesh()
 	return mesh;
 }
 
+std::shared_ptr<Texture> Resources::CreateTexture(const std::wstring& name, DXGI_FORMAT format, uint32 width, uint32 height,
+	const D3D12_HEAP_PROPERTIES& heapProperty, D3D12_HEAP_FLAGS heapFlags,
+	D3D12_RESOURCE_FLAGS resFlags, Vec4 clearColor)
+{
+	std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+	texture->Create(format, width, height, heapProperty, heapFlags, resFlags, clearColor);
+	Add(name, texture);
+
+	return texture;
+}
+
+std::shared_ptr<Texture> Resources::CreateTextureFromResource(const std::wstring& name, ComPtr<ID3D12Resource> tex2D)
+{
+	std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+	texture->CreateFromResource(tex2D);
+	Add(name, texture);
+
+	return texture;
+}
+
+
 void Resources::CreateDefaultShader()
 {
 	// Skybox
 	{
 		ShaderInfo info =
 		{
+			SHADER_TYPE::FORWARD,
 			RASTERIZER_TYPE::CULL_NONE,
 			DEPTH_STENCIL_TYPE::LESS_EQUAL
 		};
@@ -240,10 +262,23 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Skybox", shader);
 	}
 
+	// Deferred (Deferred)
+	{
+		ShaderInfo info =
+		{
+			SHADER_TYPE::DEFERRED
+		};
+
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		shader->Init(L"..\\Resources\\Shader\\deferred.fx", info);
+		Add<Shader>(L"Deferred", shader);
+	}
+
 	// Forward (Forward)
 	{
 		ShaderInfo info =
 		{
+			SHADER_TYPE::FORWARD,
 		};
 
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();

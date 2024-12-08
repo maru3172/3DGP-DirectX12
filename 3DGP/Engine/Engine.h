@@ -8,7 +8,7 @@
 #include "ConstantBuffer.h"
 #include "TableDescriptorHeap.h"
 #include "Texture.h"
-#include "DepthStencilBuffer.h"
+#include "RenderTargetGroup.h"
 
 class Engine
 {
@@ -23,25 +23,25 @@ class Engine
 	std::shared_ptr<SwapChain> _swapChain = std::make_shared<SwapChain>();
 	std::shared_ptr<RootSignature> _rootSignature = std::make_shared<RootSignature>();
 	std::shared_ptr<TableDescriptorHeap> _tableDescHeap = std::make_shared<TableDescriptorHeap>();
-	std::shared_ptr<DepthStencilBuffer> _depthStencilBuffer = std::make_shared<DepthStencilBuffer>();
 
 	std::vector<std::shared_ptr<ConstantBuffer>> _constantBuffers;
+	std::array<std::shared_ptr<RenderTargetGroup>, RENDER_TARGET_GROUP_COUNT> _rtGroups;
 
 	void ShowFps();
 	void CreateConstantBuffer(CBV_REGISTER reg, uint32 bufferSize, uint32 count);
+	void CreateRenderTargetGroups();
 public:
+	const WindowInfo& GetWindow() { return _window; }
 	std::shared_ptr<Device> GetDevice() { return _device; }
 	std::shared_ptr<CommandQueue> GetCmdQueue() { return _cmdQueue; }
 	std::shared_ptr<SwapChain> GetSwapChain() { return _swapChain; }
 	std::shared_ptr<RootSignature> GetRootSignature() { return _rootSignature; }
 	std::shared_ptr<TableDescriptorHeap> GetTableDescHeap() { return _tableDescHeap; }
-	std::shared_ptr<DepthStencilBuffer> GetDepthStencilBuffer() { return _depthStencilBuffer; }
 
 	std::shared_ptr<ConstantBuffer> GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return _constantBuffers[static_cast<uint8>(type)]; }
+	std::shared_ptr<RenderTargetGroup> GetRTGroup(RENDER_TARGET_GROUP_TYPE type) { return _rtGroups[static_cast<uint8>(type)]; }
 
 	void Init(const WindowInfo& window);
-	const WindowInfo& GetWindow() { return _window; }
-
 	void Update();
 
 	void Render();

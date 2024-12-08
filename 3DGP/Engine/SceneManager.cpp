@@ -118,31 +118,6 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 	}
 #pragma endregion
 
-#pragma region UI_Test
-	{
-		std::shared_ptr<GameObject> sphere = std::make_shared<GameObject>();
-		sphere->SetLayerIndex(GET_SINGLE(SceneManager)->LayerNameToIndex(L"UI")); // UI
-		sphere->AddComponent(std::make_shared<Transform>());
-		sphere->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 100.f));
-		sphere->GetTransform()->SetLocalPosition(Vec3(0, 0, 500.f));
-		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
-		{
-			std::shared_ptr<Mesh> mesh = GET_SINGLE(Resources)->LoadRectangleMesh();
-			meshRenderer->SetMesh(mesh);
-		}
-		{
-			std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
-			std::shared_ptr<Texture> texture = GET_SINGLE(Resources)->Load<Texture>(L"Leather", L"..\\Resources\\Texture\\Leather.jpg");
-			std::shared_ptr<Material> material = std::make_shared<Material>();
-			material->SetShader(shader);
-			material->SetTexture(0, texture);
-			meshRenderer->SetMaterial(material);
-		}
-		sphere->AddComponent(meshRenderer);
-		scene->AddGameObject(sphere);
-	}
-#pragma endregion
-
 #pragma region Cube
 	{
 		std::shared_ptr<GameObject> sphere = std::make_shared<GameObject>();
@@ -155,13 +130,39 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 			meshRenderer->SetMesh(sphereMesh);
 		}
 		{
-			std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
+			std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"Deferred");
 			std::shared_ptr<Texture> texture = GET_SINGLE(Resources)->Load<Texture>(L"Metal_Pattern", L"..\\Resources\\Texture\\Metal_Pattern.png");
 			std::shared_ptr<Texture> texture2 = GET_SINGLE(Resources)->Load<Texture>(L"Metal_Pattern_Normal", L"..\\Resources\\Texture\\Metal_Pattern_Normal.png");
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetShader(shader);
 			material->SetTexture(0, texture);
 			material->SetTexture(1, texture2);
+			meshRenderer->SetMaterial(material);
+		}
+		sphere->AddComponent(meshRenderer);
+		scene->AddGameObject(sphere);
+	}
+#pragma endregion
+
+#pragma region UI_Test
+	for (int32 i = 0; i < 3; i++)
+	{
+		std::shared_ptr<GameObject> sphere = std::make_shared<GameObject>();
+		sphere->SetLayerIndex(GET_SINGLE(SceneManager)->LayerNameToIndex(L"UI")); // UI
+		sphere->AddComponent(std::make_shared<Transform>());
+		sphere->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 100.f));
+		sphere->GetTransform()->SetLocalPosition(Vec3(-350.f + (i * 160),  250.f, 500.f));
+		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+		{
+			std::shared_ptr<Mesh> mesh = GET_SINGLE(Resources)->LoadRectangleMesh();
+			meshRenderer->SetMesh(mesh);
+		}
+		{
+			std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
+			std::shared_ptr<Texture> texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->GetRTTexture(i);
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->SetShader(shader);
+			material->SetTexture(0, texture);
 			meshRenderer->SetMaterial(material);
 		}
 		sphere->AddComponent(meshRenderer);

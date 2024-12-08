@@ -73,8 +73,10 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect)
 	_cmdAlloc->Reset();
 	_cmdList->Reset(_cmdAlloc.Get(), nullptr);
 
+	int8 backIndex = _swapChain->GetBackBufferIndex();
+
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		_swapChain->GetBackRTVBuffer().Get(),
+		GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->GetRTTexture(backIndex)->GetTex2D().Get(),
 		D3D12_RESOURCE_STATE_PRESENT, // 화면 출력
 		D3D12_RESOURCE_STATE_RENDER_TARGET); // 외주 결과물
 
@@ -95,22 +97,15 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect)
 	// 커맨드 리스트를 밀고 배리어가 깔리면 세팅을 다시 해줘야함
 	_cmdList->RSSetViewports(1, vp);
 	_cmdList->RSSetScissorRects(1, rect);
-
-	// 어떤 버퍼에다가 그림을 그려야 할지 다시 한번 언급을 해줌, descHeap에서 BackBuffer를 불러와서 그 대상으로 gpu에게 그려달라 요청
-	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = _swapChain->GetBackRTV();
-	_cmdList->ClearRenderTargetView(backBufferView, Colors::Black, 0, nullptr);
-
-	D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = GEngine->GetDepthStencilBuffer()->GetDSVCpuHandle();
-	_cmdList->OMSetRenderTargets(1, &backBufferView, FALSE, &depthStencilView);
-
-	_cmdList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void CommandQueue::RenderEnd()
 {
+	int8 backIndex = _swapChain->GetBackBufferIndex();
+
 	// 이번엔 바꿔치기
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		_swapChain->GetBackRTVBuffer().Get(),
+		GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->GetRTTexture(backIndex)->GetTex2D().Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET, // 외주 결과물
 		D3D12_RESOURCE_STATE_PRESENT); // 화면 출력
 
