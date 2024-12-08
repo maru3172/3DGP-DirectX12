@@ -10,7 +10,7 @@ However, this sample may not be accurate because it was made by students after w
 
 Important! If this program warns you that the Engine.lib file cannot be read, please build the engine solution part and then use it.
 
-1. initialization - initialization, Triangle, ConstantBuffer, Root Signature, Index Buffer, Texture Mapping, Depth Stencil View
+1. Initialization - Initialization, Triangle, ConstantBuffer, Root Signature, Index Buffer, Texture Mapping, Depth Stencil View
 
 2. Component - input & Timer, Material, Component, Scene
 
