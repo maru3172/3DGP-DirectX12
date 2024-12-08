@@ -22,5 +22,5 @@ public:
 	virtual ~Mesh();
 
 	void Init(const std::vector<Vertex>& vertexBuffer, const std::vector<uint32>& indexBuffer);
-	void Render();
+	void Render(uint32 instanceCount = 1);
 };

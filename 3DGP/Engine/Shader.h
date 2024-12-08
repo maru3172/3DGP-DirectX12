@@ -6,6 +6,7 @@ enum class SHADER_TYPE : uint8
 	DEFERRED,
 	FORWARD,
 	LIGHTING,
+	PARTICLE,
 	COMPUTE,
 };
 
@@ -42,7 +43,7 @@ struct ShaderInfo
 	RASTERIZER_TYPE rasterizerType = RASTERIZER_TYPE::CULL_BACK;
 	DEPTH_STENCIL_TYPE depthStencilType = DEPTH_STENCIL_TYPE::LESS;
 	BLEND_TYPE blendType = BLEND_TYPE::DEFAULT;
-	D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	D3D_PRIMITIVE_TOPOLOGY topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 };
 
 // 뭘 해야할지 기술하는 기술서
@@ -54,6 +55,7 @@ class Shader : public Object
 	// Graphics Shader
 	ComPtr<ID3DBlob>					_vsBlob;
 	ComPtr<ID3DBlob>					_psBlob;
+	ComPtr<ID3DBlob>					_gsBlob;
 	ComPtr<ID3DBlob>					_errBlob;
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC  _graphicsPipelineDesc = {};
 
@@ -64,14 +66,16 @@ class Shader : public Object
 	void CreateShader(const std::wstring& path, const std::string& name, const std::string& version, ComPtr<ID3DBlob>& blob, D3D12_SHADER_BYTECODE& shaderByteCode);
 	void CreateVertexShader(const std::wstring& path, const std::string& name, const std::string& version);
 	void CreatePixelShader(const std::wstring& path, const std::string& name, const std::string& version);
+	void CreateGeometryShader(const std::wstring& path, const std::string& name, const std::string& version);
 public:
 	Shader();
 	virtual ~Shader();
 
-	void CreateGraphicsShader(const std::wstring& path, ShaderInfo info = ShaderInfo(), const std::string& vs = "VS_Main", const std::string& ps = "PS_Main");
+	void CreateGraphicsShader(const std::wstring& path, ShaderInfo info = ShaderInfo(), const std::string& vs = "VS_Main", const std::string& ps = "PS_Main", const std::string& gs = "");
 	void CreateComputeShader(const std::wstring& path, const std::string& name, const std::string& version);
 	void Update();
 
 	SHADER_TYPE GetShaderType() { return _info.shaderType; }
-};
 
+	static D3D12_PRIMITIVE_TOPOLOGY_TYPE GetTopologyType(D3D_PRIMITIVE_TOPOLOGY topology);
+};

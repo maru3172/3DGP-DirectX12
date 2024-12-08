@@ -8,6 +8,25 @@ void Resources::Init()
 	CreateDefaultMaterial();
 }
 
+std::shared_ptr<Mesh> Resources::LoadPointMesh()
+{
+	std::shared_ptr<Mesh> findMesh = Get<Mesh>(L"Point");
+	if (findMesh)
+		return findMesh;
+
+	std::vector<Vertex> vec(1);
+	vec[0] = Vertex(Vec3(0, 0, 0), Vec2(0.5f, 0.5f), Vec3(0.0f, 0.0f, -1.0f), Vec3(1.0f, 0.0f, 0.0f));
+
+	std::vector<uint32> idx(1);
+	idx[0] = 0;
+
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+	mesh->Init(vec, idx);
+	Add(L"Point", mesh);
+
+	return mesh;
+}
+
 std::shared_ptr<Mesh> Resources::LoadRectangleMesh()
 {
 	std::shared_ptr<Mesh> findMesh = Get<Mesh>(L"Rectangle");
@@ -351,6 +370,29 @@ void Resources::CreateDefaultShader()
 		shader->CreateComputeShader(L"..\\Resources\\Shader\\compute.fx", "CS_Main", "cs_5_0");
 		Add<Shader>(L"ComputeShader", shader);
 	}
+
+	// Particle
+	{
+		ShaderInfo info =
+		{
+			SHADER_TYPE::PARTICLE,
+			RASTERIZER_TYPE::CULL_BACK,
+			DEPTH_STENCIL_TYPE::LESS_NO_WRITE,
+			BLEND_TYPE::ALPHA_BLEND,
+			D3D_PRIMITIVE_TOPOLOGY_POINTLIST
+		};
+
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		shader->CreateGraphicsShader(L"..\\Resources\\Shader\\particle.fx", info, "VS_Main", "PS_Main", "GS_Main");
+		Add<Shader>(L"Particle", shader);
+	}
+
+	// ComputeParticle
+	{
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		shader->CreateComputeShader(L"..\\Resources\\Shader\\particle.fx", "CS_Main", "cs_5_0");
+		Add<Shader>(L"ComputeParticle", shader);
+	}
 }
 
 void Resources::CreateDefaultMaterial()
@@ -404,5 +446,22 @@ void Resources::CreateDefaultMaterial()
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(shader);
 		Add<Material>(L"ComputeShader", material);
+	}
+
+	// Particle
+	{
+		std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"Particle");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->SetShader(shader);
+		Add<Material>(L"Particle", material);
+	}
+
+	// ComputeParticle
+	{
+		std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"ComputeParticle");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->SetShader(shader);
+
+		Add<Material>(L"ComputeParticle", material);
 	}
 }

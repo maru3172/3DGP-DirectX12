@@ -25,6 +25,7 @@ class Camera : public Component
 
 	std::vector<std::shared_ptr<GameObject>> _vecDeferred;
 	std::vector<std::shared_ptr<GameObject>> _vecForward;
+	std::vector<std::shared_ptr<GameObject>> _vecParticle;
 public:
 	Camera();
 	virtual ~Camera();
