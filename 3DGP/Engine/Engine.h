@@ -19,10 +19,12 @@ class Engine
 
 	// 각 클래스의 정보들을 가져오기
 	std::shared_ptr<Device> _device = std::make_shared<Device>();
-	std::shared_ptr<CommandQueue> _cmdQueue = std::make_shared<CommandQueue>();
+	std::shared_ptr<GraphicsCommandQueue> _graphicsCmdQueue = std::make_shared<GraphicsCommandQueue>();
+	std::shared_ptr<ComputeCommandQueue> _computeCmdQueue = std::make_shared<ComputeCommandQueue>();
 	std::shared_ptr<SwapChain> _swapChain = std::make_shared<SwapChain>();
 	std::shared_ptr<RootSignature> _rootSignature = std::make_shared<RootSignature>();
-	std::shared_ptr<TableDescriptorHeap> _tableDescHeap = std::make_shared<TableDescriptorHeap>();
+	std::shared_ptr<GraphicsDescriptorHeap> _graphicsDescHeap = std::make_shared<GraphicsDescriptorHeap>();
+	std::shared_ptr<ComputeDescriptorHeap> _computeDescHeap = std::make_shared<ComputeDescriptorHeap>();
 
 	std::vector<std::shared_ptr<ConstantBuffer>> _constantBuffers;
 	std::array<std::shared_ptr<RenderTargetGroup>, RENDER_TARGET_GROUP_COUNT> _rtGroups;
@@ -33,10 +35,12 @@ class Engine
 public:
 	const WindowInfo& GetWindow() { return _window; }
 	std::shared_ptr<Device> GetDevice() { return _device; }
-	std::shared_ptr<CommandQueue> GetCmdQueue() { return _cmdQueue; }
+	std::shared_ptr<GraphicsCommandQueue> GetGraphicsCmdQueue() { return _graphicsCmdQueue; }
+	std::shared_ptr<ComputeCommandQueue> GetComputeCmdQueue() { return _computeCmdQueue; }
 	std::shared_ptr<SwapChain> GetSwapChain() { return _swapChain; }
 	std::shared_ptr<RootSignature> GetRootSignature() { return _rootSignature; }
-	std::shared_ptr<TableDescriptorHeap> GetTableDescHeap() { return _tableDescHeap; }
+	std::shared_ptr<GraphicsDescriptorHeap> GetGraphicsDescHeap() { return _graphicsDescHeap; }
+	std::shared_ptr<ComputeDescriptorHeap> GetComputeDescHeap() { return _computeDescHeap; }
 
 	std::shared_ptr<ConstantBuffer> GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return _constantBuffers[static_cast<uint8>(type)]; }
 	std::shared_ptr<RenderTargetGroup> GetRTGroup(RENDER_TARGET_GROUP_TYPE type) { return _rtGroups[static_cast<uint8>(type)]; }

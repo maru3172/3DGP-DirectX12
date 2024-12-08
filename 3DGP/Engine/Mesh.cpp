@@ -23,14 +23,14 @@ void Mesh::Init(const std::vector<Vertex>& vertexBuffer, const std::vector<uint3
 void Mesh::Render()
 {
 	// 이제 그릴 시간
-	CMD_LIST->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 정점의 형태와 어떻게 연결되어 있지?
-	CMD_LIST->IASetVertexBuffers(0, 1, &_vertexBufferView); // Slot: (0~15)
-	CMD_LIST->IASetIndexBuffer(&_indexBufferView); // 인덱스 버퍼 보면서 삼각형 그리기
+	GRAPHICS_CMD_LIST->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 정점의 형태와 어떻게 연결되어 있지?
+	GRAPHICS_CMD_LIST->IASetVertexBuffers(0, 1, &_vertexBufferView); // Slot: (0~15)
+	GRAPHICS_CMD_LIST->IASetIndexBuffer(&_indexBufferView); // 인덱스 버퍼 보면서 삼각형 그리기
 
-	GEngine->GetTableDescHeap()->CommitTable();
+	GEngine->GetGraphicsDescHeap()->CommitTable();
 
 	// CMD_LIST->DrawInstanced(_vertexCount, 1, 0, 0);
-	CMD_LIST->DrawIndexedInstanced(_indexCount, 1, 0, 0, 0); // 인덱스를 가져와 그려주세요
+	GRAPHICS_CMD_LIST->DrawIndexedInstanced(_indexCount, 1, 0, 0, 0); // 인덱스를 가져와 그려주세요
 }
 
 // 버텍스(점)를 생성하고 데이터 넣기

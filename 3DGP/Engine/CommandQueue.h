@@ -6,7 +6,11 @@
 class SwapChain;
 class DescriptorHeap;
 
-class CommandQueue
+// ====================
+// GraphicsCommandQueue
+// ====================
+
+class GraphicsCommandQueue
 {
 	// CommandQueue : DX12에 등장
 	// 외주를 요청할 때, 하나씩 요청하면 비효율적
@@ -30,7 +34,7 @@ class CommandQueue
 	std::shared_ptr<SwapChain> _swapChain;
 public:
 
-	~CommandQueue(); // 소멸자
+	~GraphicsCommandQueue(); // 소멸자
 
 	void Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> swapChain);
 	void WaitSync(); // Fence 이용, 다 끝날 때까지 기다려라.
@@ -41,7 +45,30 @@ public:
 	void FlushResourceCommandQueue();
 
 	ComPtr<ID3D12CommandQueue> GetCmdQueue() { return _cmdQueue; }
-	ComPtr<ID3D12GraphicsCommandList> GetCmdList() { return _cmdList; }
+	ComPtr<ID3D12GraphicsCommandList> GetGraphicsCmdList() { return _cmdList; }
 	ComPtr<ID3D12GraphicsCommandList> GetResourceCmdList() { return _resCmdList; }
 };
 
+// ===================
+// ComputeCommandQueue
+// ===================
+
+class ComputeCommandQueue
+{
+	ComPtr<ID3D12CommandQueue>			_cmdQueue;
+	ComPtr<ID3D12CommandAllocator>		_cmdAlloc;
+	ComPtr<ID3D12GraphicsCommandList>	_cmdList;
+
+	ComPtr<ID3D12Fence>					_fence;
+	uint32								_fenceValue = 0;
+	HANDLE								_fenceEvent = INVALID_HANDLE_VALUE;
+public:
+	~ComputeCommandQueue();
+
+	void Init(ComPtr<ID3D12Device> device);
+	void WaitSync();
+	void FlushComputeCommandQueue();
+
+	ComPtr<ID3D12CommandQueue> GetCmdQueue() { return _cmdQueue; }
+	ComPtr<ID3D12GraphicsCommandList> GetComputeCmdList() { return _cmdList; }
+};
