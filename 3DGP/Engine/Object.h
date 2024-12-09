@@ -23,6 +23,7 @@ class Object
 protected:
 	OBJECT_TYPE _objectType = OBJECT_TYPE::NONE;
 	std::wstring _name;
+	uint32 _id = 0;
 
 	friend class Resources;
 	virtual void Load(const std::wstring& path) { }
@@ -35,6 +36,8 @@ public:
 
 	void SetName(const std::wstring& name) { _name = name; }
 	const std::wstring& GetName() { return _name; }
+
+	uint32 GetID() { return _id; }
 
 	// TODO : Instantiate
 };

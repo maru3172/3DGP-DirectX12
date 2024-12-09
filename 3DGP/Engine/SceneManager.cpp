@@ -140,25 +140,23 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 #pragma endregion
 
 #pragma region Object
+	for(int32 i = 0; i < 50; i++)
 	{
 		std::shared_ptr<GameObject> obj = std::make_shared<GameObject>();
 		obj->AddComponent(std::make_shared<Transform>());
-		obj->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 100.f));
-		obj->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, 150.f));
+		obj->GetTransform()->SetLocalScale(Vec3(25.f, 25.f, 25.f));
+		obj->GetTransform()->SetLocalPosition(Vec3(-300.f + i * 10, 0.f, 500.f));
 		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
 		{
 			std::shared_ptr<Mesh> sphereMesh = GET_SINGLE(Resources)->LoadSphereMesh();
 			meshRenderer->SetMesh(sphereMesh);
 		}
 		{
-			std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"Deferred");
-			std::shared_ptr<Texture> texture = GET_SINGLE(Resources)->Load<Texture>(L"Leather", L"..\\Resources\\Texture\\Metal_Panel.jpg");
-			std::shared_ptr<Texture> texture2 = GET_SINGLE(Resources)->Load<Texture>(L"Leather_Normal", L"..\\Resources\\Texture\\Metal_Panel_Normal.jpg");
-			std::shared_ptr<Material> material = std::make_shared<Material>();
-			material->SetShader(shader);
-			material->SetTexture(0, texture);
-			material->SetTexture(1, texture2);
+			std::shared_ptr<Material> material = GET_SINGLE(Resources)->Get<Material>(L"GameObject");
+			material->SetInt(0, 1);
 			meshRenderer->SetMaterial(material);
+			//material->SetInt(0, 0);
+			//meshRenderer->SetMaterial(material->Clone());
 		}
 		obj->AddComponent(meshRenderer);
 		scene->AddGameObject(obj);
@@ -212,17 +210,6 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		light->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
 
 		scene->AddGameObject(light);
-	}
-#pragma endregion
-
-#pragma region ParticleSystem
-	{
-		std::shared_ptr<GameObject> particle = std::make_shared<GameObject>();
-		particle->AddComponent(std::make_shared<Transform>());
-		particle->AddComponent(std::make_shared<ParticleSystem>());
-		particle->SetCheckFrustum(false);
-		particle->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, 100.f));
-		scene->AddGameObject(particle);
 	}
 #pragma endregion
 

@@ -54,5 +54,7 @@ public:
 	void PushGraphicsData();
 	void PushComputeData();
 	void Dispatch(uint32 x, uint32 y, uint32 z);
+
+	std::shared_ptr<Material> Clone();
 };
 

@@ -3,6 +3,17 @@
 class Mesh;
 class Material;
 
+// [32][32]
+union InstanceID
+{
+	struct
+	{
+		uint32 meshID;
+		uint32 materialID;
+	};
+	uint64 id;
+};
+
 class MeshRenderer : public Component
 {
 	std::shared_ptr<Mesh> _mesh;
@@ -17,4 +28,7 @@ public:
 	void SetMaterial(std::shared_ptr<Material> material) { _material = material; }
 
 	void Render();
+	void Render(std::shared_ptr<class InstancingBuffer>& buffer);
+
+	uint64 GetInstanceID();
 };
