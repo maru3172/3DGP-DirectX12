@@ -161,6 +161,7 @@ struct TransformParams
 	Matrix matProjection;
 	Matrix matWV;
 	Matrix matWVP;
+	Matrix matViewInv;
 };
 
 extern std::unique_ptr<class Engine> GEngine;

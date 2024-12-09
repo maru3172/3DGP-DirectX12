@@ -29,6 +29,7 @@ public:
 
 	void Render();
 	void Render(std::shared_ptr<class InstancingBuffer>& buffer);
+	void RenderShadow();
 
 	uint64 GetInstanceID();
 };

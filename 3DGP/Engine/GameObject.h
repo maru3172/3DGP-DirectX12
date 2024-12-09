@@ -16,6 +16,7 @@ class GameObject : public Object, public std::enable_shared_from_this<GameObject
 
 	bool _checkFrustum = true;
 	uint8 _layerIndex = 0;
+	bool _static = true;
 public:
 	GameObject();
 	virtual ~GameObject();
@@ -41,5 +42,8 @@ public:
 
 	void SetLayerIndex(uint8 layer) { _layerIndex = layer; }
 	uint8 GetLayerIndex() { return _layerIndex; }
+
+	void SetStatic(bool flag) { _static = flag; }
+	bool IsStatic() { return _static; }
 };
 

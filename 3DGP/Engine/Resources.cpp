@@ -393,6 +393,20 @@ void Resources::CreateDefaultShader()
 		shader->CreateComputeShader(L"..\\Resources\\Shader\\particle.fx", "CS_Main", "cs_5_0");
 		Add<Shader>(L"ComputeParticle", shader);
 	}
+
+	// Shadow
+	{
+		ShaderInfo info =
+		{
+			SHADER_TYPE::SHADOW,
+			RASTERIZER_TYPE::CULL_BACK,
+			DEPTH_STENCIL_TYPE::LESS,
+		};
+
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		shader->CreateGraphicsShader(L"..\\Resources\\Shader\\shadow.fx", info);
+		Add<Shader>(L"Shadow", shader);
+	}
 }
 
 void Resources::CreateDefaultMaterial()
@@ -475,5 +489,13 @@ void Resources::CreateDefaultMaterial()
 		material->SetTexture(0, texture);
 		material->SetTexture(1, texture2);
 		Add<Material>(L"GameObject", material);
+	}
+
+	// Shadow
+	{
+		std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"Shadow");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->SetShader(shader);
+		Add<Material>(L"Shadow", material);
 	}
 }

@@ -39,7 +39,7 @@ public:
 	void Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> swapChain);
 	void WaitSync(); // Fence 이용, 다 끝날 때까지 기다려라.
 
-	void RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect);
+	void RenderBegin();
 	void RenderEnd();
 
 	void FlushResourceCommandQueue();

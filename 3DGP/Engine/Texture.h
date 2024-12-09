@@ -4,6 +4,7 @@
 class Texture : public Object
 {
 	ScratchImage			 		_image;
+	D3D12_RESOURCE_DESC				_desc;
 	ComPtr<ID3D12Resource>			_tex2D;
 
 	ComPtr<ID3D12DescriptorHeap>	_srvHeap;
@@ -33,4 +34,7 @@ public:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetSRVHandle() { return _srvHeapBegin; }
 	D3D12_CPU_DESCRIPTOR_HANDLE GetUAVHandle() { return _uavHeapBegin; }
+
+	float GetWidth() { return static_cast<float>(_desc.Width); }
+	float GetHeight() { return static_cast<float>(_desc.Height); }
 };
