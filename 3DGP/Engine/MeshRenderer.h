@@ -17,15 +17,15 @@ union InstanceID
 class MeshRenderer : public Component
 {
 	std::shared_ptr<Mesh> _mesh;
-	std::shared_ptr<Material> _material;
+	std::vector<std::shared_ptr<Material>> _materials;
 public:
 	MeshRenderer();
 	virtual ~MeshRenderer();
 
-	std::shared_ptr<Material> GetMaterial() { return _material; }
+	std::shared_ptr<Material> GetMaterial(uint32 idx = 0) { return _materials[idx]; }
 
 	void SetMesh(std::shared_ptr<Mesh> mesh) { _mesh = mesh; }
-	void SetMaterial(std::shared_ptr<Material> material) { _material = material; }
+	void SetMaterial(std::shared_ptr<Material> material, uint32 idx = 0);
 
 	void Render();
 	void Render(std::shared_ptr<class InstancingBuffer>& buffer);

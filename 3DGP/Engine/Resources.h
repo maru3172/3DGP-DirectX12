@@ -40,6 +40,8 @@ public:
 		D3D12_RESOURCE_FLAGS resFlags = D3D12_RESOURCE_FLAG_NONE, Vec4 clearColor = Vec4());
 
 	std::shared_ptr<Texture> CreateTextureFromResource(const std::wstring& name, ComPtr<ID3D12Resource> tex2D);
+
+	std::shared_ptr<class MeshData> LoadFBX(const std::wstring& path);
 };
 
 template<typename T>

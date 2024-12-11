@@ -141,6 +141,12 @@
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Object\Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="FBXLoader.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshData.cpp">
+      <Filter>Object\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -253,6 +259,12 @@
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
       <Filter>Object\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="FBXLoader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshData.h">
+      <Filter>Object\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

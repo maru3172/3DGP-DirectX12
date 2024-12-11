@@ -31,6 +31,8 @@ using namespace Microsoft::WRL;
 #include <DirectXTex/DirectXTex.h>
 #include <DirectXTex/DirectXTex.inl>
 
+#include "FBX/fbxsdk.h"
+
 // 각종 라이브러리
 #pragma comment(lib, "d3d12")
 #pragma comment(lib, "dxgi")
@@ -41,6 +43,16 @@ using namespace Microsoft::WRL;
 #pragma comment(lib, "DirectXTex\\DirectXTex_debug.lib")
 #else
 #pragma comment(lib, "DirectXTex\\DirectXTex.lib")
+#endif
+
+#ifdef _DEBUG
+#pragma comment(lib, "FBX\\debug\\libfbxsdk-md.lib")
+#pragma comment(lib, "FBX\\debug\\libxml2-md.lib")
+#pragma comment(lib, "FBX\\debug\\zlib-md.lib")
+#else
+#pragma comment(lib, "FBX\\release\libfbxsdk-md.lib")
+#pragma comment(lib, "FBX\\release\libxml2-md.lib")
+#pragma comment(lib, "FBX\\release\\zlib-md.lib")
 #endif
 
 // 각종 typedef
@@ -126,6 +138,8 @@ struct Vertex
 	Vec2 uv;
 	Vec3 normal;
 	Vec3 tangent;
+	Vec4 weights;
+	Vec4 indices;
 };
 
 #define DECLARE_SINGLE(type)		\
@@ -165,3 +179,7 @@ struct TransformParams
 };
 
 extern std::unique_ptr<class Engine> GEngine;
+
+// Utils
+std::wstring s2ws(const std::string& s);
+std::string ws2s(const std::wstring& s);
