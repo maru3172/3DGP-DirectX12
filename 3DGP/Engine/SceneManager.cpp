@@ -140,24 +140,24 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 #pragma endregion
 
 #pragma region Object
-	{
-		std::shared_ptr<GameObject> obj = std::make_shared<GameObject>();
-		obj->AddComponent(std::make_shared<Transform>());
-		obj->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 100.f));
-		obj->GetTransform()->SetLocalPosition(Vec3(0, 0.f, 500.f));
-		obj->SetStatic(false);
-		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
-		{
-			std::shared_ptr<Mesh> sphereMesh = GET_SINGLE(Resources)->LoadSphereMesh();
-			meshRenderer->SetMesh(sphereMesh);
-		}
-		{
-			std::shared_ptr<Material> material = GET_SINGLE(Resources)->Get<Material>(L"GameObject");
-			meshRenderer->SetMaterial(material->Clone());
-		}
-		obj->AddComponent(meshRenderer);
-		scene->AddGameObject(obj);
-	}
+	//{
+	//	std::shared_ptr<GameObject> obj = std::make_shared<GameObject>();
+	//	obj->AddComponent(std::make_shared<Transform>());
+	//	obj->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 100.f));
+	//	obj->GetTransform()->SetLocalPosition(Vec3(0, 0.f, 500.f));
+	//	obj->SetStatic(false);
+	//	std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+	//	{
+	//		std::shared_ptr<Mesh> sphereMesh = GET_SINGLE(Resources)->LoadSphereMesh();
+	//		meshRenderer->SetMesh(sphereMesh);
+	//	}
+	//	{
+	//		std::shared_ptr<Material> material = GET_SINGLE(Resources)->Get<Material>(L"GameObject");
+	//		meshRenderer->SetMaterial(material->Clone());
+	//	}
+	//	obj->AddComponent(meshRenderer);
+	//	scene->AddGameObject(obj);
+	//}
 #pragma endregion
 
 #pragma region Plane
@@ -229,6 +229,26 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		light->GetLight()->SetSpecular(Vec3(0.1f, 0.1f, 0.1f));
 
 		scene->AddGameObject(light);
+	}
+#pragma endregion
+
+#pragma region Tessellation Test
+	{
+		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
+		gameObject->AddComponent(std::make_shared<Transform>());
+		gameObject->GetTransform()->SetLocalPosition(Vec3(0, 0, 300));
+		gameObject->GetTransform()->SetLocalScale(Vec3(100, 100, 100));
+		gameObject->GetTransform()->SetLocalRotation(Vec3(0, 0, 0));
+
+		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+		{
+			std::shared_ptr<Mesh> mesh = GET_SINGLE(Resources)->LoadRectangleMesh();
+			meshRenderer->SetMesh(mesh);
+			meshRenderer->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Tessellation"));
+		}
+		gameObject->AddComponent(meshRenderer);
+
+		scene->AddGameObject(gameObject);
 	}
 #pragma endregion
 

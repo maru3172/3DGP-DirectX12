@@ -47,6 +47,15 @@ struct ShaderInfo
 	D3D_PRIMITIVE_TOPOLOGY topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 };
 
+struct ShaderArg
+{
+	const std::string vs = "VS_Main";
+	const std::string hs;
+	const std::string ds;
+	const std::string gs;
+	const std::string ps = "PS_Main";
+};
+
 // 뭘 해야할지 기술하는 기술서
 class Shader : public Object
 {
@@ -55,8 +64,10 @@ class Shader : public Object
 
 	// Graphics Shader
 	ComPtr<ID3DBlob>					_vsBlob;
-	ComPtr<ID3DBlob>					_psBlob;
+	ComPtr<ID3DBlob>					_hsBlob;
+	ComPtr<ID3DBlob>					_dsBlob;
 	ComPtr<ID3DBlob>					_gsBlob;
+	ComPtr<ID3DBlob>					_psBlob;
 	ComPtr<ID3DBlob>					_errBlob;
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC  _graphicsPipelineDesc = {};
 
@@ -66,13 +77,15 @@ class Shader : public Object
 
 	void CreateShader(const std::wstring& path, const std::string& name, const std::string& version, ComPtr<ID3DBlob>& blob, D3D12_SHADER_BYTECODE& shaderByteCode);
 	void CreateVertexShader(const std::wstring& path, const std::string& name, const std::string& version);
-	void CreatePixelShader(const std::wstring& path, const std::string& name, const std::string& version);
+	void CreateHullShader(const std::wstring& path, const std::string& name, const std::string& version);
+	void CreateDomainShader(const std::wstring& path, const std::string& name, const std::string& version);
 	void CreateGeometryShader(const std::wstring& path, const std::string& name, const std::string& version);
+	void CreatePixelShader(const std::wstring& path, const std::string& name, const std::string& version);
 public:
 	Shader();
 	virtual ~Shader();
 
-	void CreateGraphicsShader(const std::wstring& path, ShaderInfo info = ShaderInfo(), const std::string& vs = "VS_Main", const std::string& ps = "PS_Main", const std::string& gs = "");
+	void CreateGraphicsShader(const std::wstring& path, ShaderInfo info = ShaderInfo(), ShaderArg arg = ShaderArg());
 	void CreateComputeShader(const std::wstring& path, const std::string& name, const std::string& version);
 	void Update();
 
