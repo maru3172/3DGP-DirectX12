@@ -570,6 +570,13 @@ void Resources::CreateDefaultShader()
 		shader->CreateGraphicsShader(L"..\\Resources\\Shader\\terrain.fx", info, arg);
 		Add<Shader>(L"Terrain", shader);
 	}
+
+	// ComputeAnimation
+	{
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		shader->CreateComputeShader(L"..\\Resources\\Shader\\animation.fx", "CS_Main", "cs_5_0");
+		Add<Shader>(L"ComputeAnimation", shader);
+	}
 }
 
 void Resources::CreateDefaultMaterial()
@@ -678,5 +685,14 @@ void Resources::CreateDefaultMaterial()
 		material->SetShader(shader);
 		material->SetTexture(0, texture);
 		Add<Material>(L"Terrain", material);
+	}
+
+	// ComputeAnimation
+	{
+		std::shared_ptr<Shader> shader = GET_SINGLE(Resources)->Get<Shader>(L"ComputeAnimation");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->SetShader(shader);
+
+		Add<Material>(L"ComputeAnimation", material);
 	}
 }

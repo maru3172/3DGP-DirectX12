@@ -10,6 +10,7 @@ class MonoBehaviour;
 class ParticleSystem;
 class Terrain;
 class BaseCollider;
+class Animator;
 
 class GameObject : public Object, public std::enable_shared_from_this<GameObject>
 {
@@ -38,6 +39,7 @@ public:
 	std::shared_ptr<ParticleSystem> GetParticleSystem();
 	std::shared_ptr<Terrain> GetTerrain();
 	std::shared_ptr<BaseCollider> GetCollider();
+	std::shared_ptr<Animator> GetAnimator();
 
 	void AddComponent(std::shared_ptr<Component> component);
 	

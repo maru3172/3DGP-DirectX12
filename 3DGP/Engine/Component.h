@@ -10,6 +10,7 @@ enum class COMPONENT_TYPE : uint8
 	PARTICLE_SYSTEM,
 	TERRAIN,
 	COLLIDER,
+	ANIMATOR,
 	// ...
 	MONO_BEHAVIOUR,
 	END,
@@ -22,6 +23,8 @@ enum
 
 class GameObject;
 class Transform;
+class MeshRenderer;
+class Animator;
 
 class Component : public Object
 {
@@ -47,5 +50,7 @@ public:
 
 	std::shared_ptr<GameObject> GetGameObject();
 	std::shared_ptr<Transform> GetTransform();
+	std::shared_ptr<MeshRenderer> GetMeshRenderer();
+	std::shared_ptr<Animator> GetAnimator();
 };
 
