@@ -16,6 +16,8 @@ public:
 	void LateUpdate();
 	void FinalUpdate();
 
+	std::shared_ptr<class Camera> GetMainCamera();
+
 	void Render();
 
 	void ClearRTV();

@@ -8,6 +8,7 @@ enum class COMPONENT_TYPE : uint8
 	CAMERA,
 	LIGHT,
 	PARTICLE_SYSTEM,
+	TERRAIN,
 	// ...
 	MONO_BEHAVIOUR,
 	END,

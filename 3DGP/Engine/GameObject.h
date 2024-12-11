@@ -8,6 +8,7 @@ class Camera;
 class Light;
 class MonoBehaviour;
 class ParticleSystem;
+class Terrain;
 
 class GameObject : public Object, public std::enable_shared_from_this<GameObject>
 {
@@ -34,6 +35,7 @@ public:
 	std::shared_ptr<Camera> GetCamera();
 	std::shared_ptr<Light> GetLight();
 	std::shared_ptr<ParticleSystem> GetParticleSystem();
+	std::shared_ptr<Terrain> GetTerrain();
 
 	void AddComponent(std::shared_ptr<Component> component);
 	
