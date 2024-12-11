@@ -7,6 +7,7 @@
 #include "MonoBehaviour.h"
 #include "ParticleSystem.h"
 #include "Terrain.h"
+#include "BaseCollider.h"
 
 GameObject::GameObject() : Object(OBJECT_TYPE::GAMEOBJECT)
 {
@@ -124,6 +125,12 @@ std::shared_ptr<Terrain> GameObject::GetTerrain()
 {
 	std::shared_ptr<Component> component = GetFixedComponent(COMPONENT_TYPE::TERRAIN);
 	return static_pointer_cast<Terrain>(component);
+}
+
+std::shared_ptr<BaseCollider> GameObject::GetCollider()
+{
+	std::shared_ptr<Component> component = GetFixedComponent(COMPONENT_TYPE::COLLIDER);
+	return static_pointer_cast<BaseCollider>(component);
 }
 
 void GameObject::AddComponent(std::shared_ptr<Component> component)
